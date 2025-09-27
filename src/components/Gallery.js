@@ -1,137 +1,184 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Gallery = () => {
   const [selectedImage, setSelectedImage] = useState(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const carouselRef = useRef(null);
+  const [visibleItems, setVisibleItems] = useState(6); // Start with 6 items
+  const [filter, setFilter] = useState('all');
 
   const galleryItems = [
     {
       id: 1,
       img: "/static/img/gallery/1.jpg",
-      title: "Smart Solutions"
+      title: "Smart Solutions",
+      category: "solutions"
     },
     {
       id: 2,
       img: "/static/img/gallery/2.png",
-      title: "All in One"
+      title: "All in One",
+      category: "solutions"
     },
     {
       id: 3,
       img: "/static/img/gallery/3.png",
-      title: "Hospitals and clinics"
+      title: "Hospitals and clinics",
+      category: "healthcare"
     },
     {
       id: 4,
       img: "/static/img/gallery/4.png",
-      title: "Schools"
+      title: "Schools",
+      category: "education"
     },
     {
       id: 5,
       img: "/static/img/gallery/5.png",
-      title: "AI Designs"
+      title: "AI Designs",
+      category: "technology"
     },
     {
       id: 6,
       img: "/static/img/gallery/6.png",
-      title: "AI Designs"
+      title: "AI Designs",
+      category: "technology"
     },
     {
       id: 7,
       img: "/static/img/gallery/7.png",
-      title: "Dental Clinics and Labs"
+      title: "Dental Clinics and Labs",
+      category: "healthcare"
     },
     {
       id: 8,
       img: "/static/img/gallery/8.jpg",
-      title: ""
+      title: "Advanced Technology",
+      category: "technology"
     }
   ];
 
-  const itemsPerView = 3;
+  // Filter items based on category
+  const filteredItems = galleryItems.filter(item => 
+    filter === 'all' || item.category === filter
+  );
 
-  const nextSlide = () => {
-    setCurrentIndex(prev => 
-      prev >= galleryItems.length - itemsPerView ? 0 : prev + 1
-    );
-  };
+  // Items to display (for load more functionality)
+  const itemsToShow = filteredItems.slice(0, visibleItems);
 
-  const prevSlide = () => {
-    setCurrentIndex(prev => 
-      prev === 0 ? galleryItems.length - itemsPerView : prev - 1
-    );
-  };
-
-  const openImage = (imgSrc) => {
-    setSelectedImage(imgSrc);
+  const openImage = (item) => {
+    setSelectedImage(item);
   };
 
   const closeImage = () => {
     setSelectedImage(null);
   };
 
-  // Auto-advance carousel
-  useEffect(() => {
-    const timer = setInterval(() => {
-      nextSlide();
-    }, 5000); // Change slide every 5 seconds
+  const loadMore = () => {
+    setVisibleItems(prev => prev + 3);
+  };
 
-    return () => clearInterval(timer);
-  }, [currentIndex]);
+  const categories = [
+    { key: 'all', label: 'All' },
+    { key: 'solutions', label: 'Solutions' },
+    { key: 'healthcare', label: 'Healthcare' },
+    { key: 'education', label: 'Education' },
+    { key: 'technology', label: 'Technology' }
+  ];
+
+  // Reset visible items when filter changes
+  useEffect(() => {
+    setVisibleItems(6);
+  }, [filter]);
+
+  // Keyboard navigation for modal
+  useEffect(() => {
+    const handleKeyPress = (e) => {
+      if (selectedImage && e.key === 'Escape') {
+        closeImage();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, [selectedImage]);
 
   return (
     <>
-      <section id="gallery" className="tm-section-pad-top">
-        <div className="container tm-container-gallery">
+      <section id="gallery" className="gallery-section">
+        <div className="section-container">
           <div className="row">
             <div className="text-center col-12">
-              <h2 className="tm-text-primary tm-section-title mb-4">Gallery</h2>
-              <p className="mx-auto tm-section-desc"></p>
+              <h2 className="section-title">Our Gallery</h2>
+              <p className="mx-auto tm-section-desc">
+                Explore our innovative solutions and successful projects
+              </p>
             </div>            
           </div>
-          <div className="row">
-            <div className="col-12">
-              <div className="mx-auto tm-gallery-container">
-                <div className="gallery-carousel-wrapper">
-                  <button className="gallery-nav-btn gallery-nav-prev" onClick={prevSlide}>
-                    <i className="fas fa-chevron-left"></i>
-                  </button>
-                  
-                  <div className="gallery-carousel">
-                    <div 
-                      className="gallery-carousel-track"
-                      style={{ transform: `translateX(-${currentIndex * (100 / itemsPerView)}%)` }}
-                    >
-                      {galleryItems.map(item => (
-                        <div key={item.id} className="gallery-carousel-item">
-                          <div className="gallery-item" onClick={() => openImage(item.img)}>
-                            <figure className="effect-honey tm-gallery-item">
-                              <img src={item.img} alt={`Image ${item.id}`} className="img-fluid" />
-                              <figcaption>
-                                <h2><i>{item.title} <span></span></i></h2>
-                              </figcaption>
-                            </figure>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
+          
+          {/* Filter Buttons */}
+          <div className="gallery-filter">
+            {categories.map(category => (
+              <button
+                key={category.key}
+                className={`filter-btn ${filter === category.key ? 'active' : ''}`}
+                onClick={() => setFilter(category.key)}
+              >
+                {category.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Gallery Grid */}
+          <div className="gallery-container">
+            <div className="gallery-grid">
+              {itemsToShow.map(item => (
+                <div 
+                  key={item.id} 
+                  className="gallery-item"
+                  onClick={() => openImage(item)}
+                >
+                  <img 
+                    src={item.img} 
+                    alt={item.title} 
+                    className="gallery-image"
+                  />
+                  <div className="gallery-caption">
+                    <h3>{item.title}</h3>
                   </div>
-                  
-                  <button className="gallery-nav-btn gallery-nav-next" onClick={nextSlide}>
-                    <i className="fas fa-chevron-right"></i>
-                  </button>
                 </div>
-              </div>                
-            </div>        
+              ))}
+            </div>
+
+            {/* Load More Button */}
+            {visibleItems < filteredItems.length && (
+              <div className="load-more-container">
+                <button className="load-more-btn" onClick={loadMore}>
+                  Load More
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </section>
 
+      {/* Modal */}
       {selectedImage && (
         <div className="modal-overlay" onClick={closeImage}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="close-button" onClick={closeImage}>×</button>
-            <img src={selectedImage} alt="Enlarged view" className="enlarged-image" />
+            <button 
+              className="close-button" 
+              onClick={closeImage}
+              aria-label="Close image"
+            >
+              ×
+            </button>
+            <img 
+              src={selectedImage.img} 
+              alt={selectedImage.title} 
+              className="modal-image" 
+            />
+            <div className="modal-caption">
+              <h3>{selectedImage.title}</h3>
+            </div>
           </div>
         </div>
       )}
