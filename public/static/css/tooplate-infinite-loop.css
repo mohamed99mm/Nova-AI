@@ -109,7 +109,7 @@ blockquote {
 }
 
 .navbar-brand {
-  color: white;
+  color: #6A89A7;
   font-size: 1.4rem;
   font-weight: bold;
 }
@@ -128,7 +128,7 @@ blockquote {
 }
 
 .tm-nav-link {
-  color: white;
+  color: #38B;
 }
 
 .tm-navbar.scroll .tm-nav-link {
@@ -308,7 +308,7 @@ blockquote {
 .tm-bg-overlay {
   width: 100%;
   height: 100%;
-  background: rgba(20, 70, 80, 0.2);
+  background: rgb(66, 89, 112);
   position: absolute;
   top: 0;
   left: 0;

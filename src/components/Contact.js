@@ -128,8 +128,8 @@ const Contact = () => {
 
       <footer className="text-center small tm-footer">
         <p className="mb-0">
-          Copyright &copy; 2025 <a href="#nova">Nova AI</a> 
-          . <a rel="nofollow" href="#design" title="HTML templates">Designed by Nova AI Web developers</a>
+          Copyright &copy; 2025 <a href="#nova">Nova Solutions</a> 
+          . <a rel="nofollow" href="#design" title="HTML templates">Designed by Nova Solutions Web developers</a>
         </p>
       </footer>
     </section>

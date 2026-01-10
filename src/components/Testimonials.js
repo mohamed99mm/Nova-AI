@@ -35,6 +35,13 @@ const Testimonials = () => {
     },
     {
       id: 5,
+      img: "/static/img/Abdelrahman.jpeg",
+      name: "Abdelrahman Osama",
+      role: "Frontend Developer",
+      quote: "Great experience in Web Development using React"
+    },
+    {
+      id: 6,
       img: "/static/img/ziad.jpg",
       name: "Zeyad Ahmed",
       role: "Full Stack",

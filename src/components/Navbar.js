@@ -26,7 +26,7 @@ const Navbar = () => {
       <div className="container">   
         <div className="tm-next">
           <img src="static/img/logo.png" alt="Logo" className="tm-site-logo img-fluid" />
-          <a href="#infinite" className="navbar-brand">Nova AI</a>
+          <a href="#infinite" className="navbar-brand">Nova Solutions</a>
         </div>      
                 
         <button 
@@ -48,7 +48,7 @@ const Navbar = () => {
               <a className="nav-link tm-nav-link" href="#whatwedo" onClick={(e) => handleSmoothScroll(e, '#whatwedo')}>What We Do</a>
             </li>
             <li className="nav-item">
-              <a className="nav-link tm-nav-link" href="#testimonials" onClick={(e) => handleSmoothScroll(e, '#testimonials')}>Testimonials</a>
+              <a className="nav-link tm-nav-link" href="#testimonials" onClick={(e) => handleSmoothScroll(e, '#testimonials')}>Who We Are</a>
             </li>
             <li className="nav-item">
               <a className="nav-link tm-nav-link" href="#gallery" onClick={(e) => handleSmoothScroll(e, '#gallery')}>Gallery</a>
