@@ -37,7 +37,7 @@ const Testimonials = () => {
       id: 5,
       img: "/static/img/Abdelrahman.jpeg",
       name: "Abdelrahman Osama",
-      role: "Frontend Developer",
+      role: "Frontend",
       quote: "Great experience in Web Development using React"
     },
     {
