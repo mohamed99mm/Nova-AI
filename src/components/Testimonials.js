@@ -16,7 +16,7 @@ const Testimonials = () => {
       id: 2,
       img: "/static/img/H1.jpg",
       name: "Mohamed Hesham",
-      role: "Full Stack",
+      role: "Partner & Full Stack",
       quote: "Great experience in Web Development using React and Java Spring"
     },
     {
